@@ -9,7 +9,7 @@ import android.databinding.Bindable;
 public class Sound {
     private String assetPath;
     private String soundName;
-
+    private Integer id;
 
     // Constructor
     public Sound(String assetPath) {
@@ -28,4 +28,11 @@ public class Sound {
         return soundName;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

@@ -1,7 +1,11 @@
 package com.example.silvee.beatbox;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.nfc.Tag;
 import android.util.Log;
 
 import java.io.IOException;
@@ -15,13 +19,23 @@ import java.util.List;
 public class BeatBox {
     public static final String TAG = "BeatBox";
     public static final String SOUNDS_FOLDER = "sample_sounds";
+    public static final int MAX_SOUNDS = 5;
 
     private AssetManager assetManager;
     private List<Sound> soundList = new ArrayList<>();
+    private SoundPool soundPool;
 
     public BeatBox(Context context) {
         assetManager = context.getAssets();
+        //deprecated constructor used for compatibility instead of SoundPool.Builder
+        soundPool = new SoundPool(MAX_SOUNDS, AudioManager.STREAM_MUSIC, 0);
         loadSounds();
+    }
+
+    private void load(Sound sound) throws IOException{
+        AssetFileDescriptor assetFileDescriptor = assetManager.openFd(sound.getAssetPath());
+        int soundId = soundPool.load(assetFileDescriptor, 1);
+        sound.setId(soundId);
     }
 
     private void loadSounds() {
@@ -36,10 +50,22 @@ public class BeatBox {
         }
 
         for (String filename: soundNames) {
-            String assetPath = SOUNDS_FOLDER + "/" + filename;
-            Sound sound = new Sound(assetPath);
-            soundList.add(sound);
+            try {
+                String assetPath = SOUNDS_FOLDER + "/" + filename;
+                Sound sound = new Sound(assetPath);
+                load(sound);
+                soundList.add(sound);
+            } catch (IOException ioe) {
+                Log.e(TAG, "Could not load sound " + filename, ioe);
+            }
+
         }
+    }
+
+    public void play(Sound sound) {
+        Integer id = sound.getId();
+        if (id == null) return;
+        soundPool.play(sound.getId(), 1.0f, 1.0f, 1, 0, 1.0f);
     }
 
     public List<Sound> getSoundList() {
