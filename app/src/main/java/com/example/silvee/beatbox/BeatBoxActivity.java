@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 public class BeatBoxActivity extends SingleFragmentActivity {
 
+    Fragment bbfragment;
+
     @Override
     protected Fragment createFragment() {
         return BeatBoxFragment.newInstance();
@@ -19,11 +21,10 @@ public class BeatBoxActivity extends SingleFragmentActivity {
         setContentView(R.layout.activity_fragment);
 
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragment_frame);
 
-        if (fragment == null) {
-            fragment = createFragment();
-            fm.beginTransaction().add(R.id.fragment_frame, fragment).commit();
+        if (bbfragment == null) {
+            bbfragment = createFragment();
+            fm.beginTransaction().add(R.id.fragment_container, bbfragment).commit();
         }
     }
 }

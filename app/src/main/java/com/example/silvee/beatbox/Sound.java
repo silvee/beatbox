@@ -1,5 +1,7 @@
 package com.example.silvee.beatbox;
 
+import android.databinding.Bindable;
+
 /**
  * Created by silvee on 20.12.2017.
  */
