@@ -58,7 +58,6 @@ public class BeatBox {
             } catch (IOException ioe) {
                 Log.e(TAG, "Could not load sound " + filename, ioe);
             }
-
         }
     }
 
@@ -66,6 +65,10 @@ public class BeatBox {
         Integer id = sound.getId();
         if (id == null) return;
         soundPool.play(sound.getId(), 1.0f, 1.0f, 1, 0, 1.0f);
+    }
+
+    public void release() {
+        soundPool.release();
     }
 
     public List<Sound> getSoundList() {

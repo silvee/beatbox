@@ -9,9 +9,9 @@
     </data>
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="48dp"
+        android:layout_height="108dp"
         android:text="@{viewModel.sound.soundName}"
+        android:onClick="@{() -> viewModel.onButtonClicked()}"
         tools:text="Sound name">
     </Button>
 </layout>
