@@ -7,12 +7,19 @@
             type="com.example.silvee.beatbox.SoundViewModel">
         </variable>
     </data>
-    <Button
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="108dp"
-        android:text="@{viewModel.sound.soundName}"
-        android:onClick="@{() -> viewModel.onButtonClicked()}"
-        tools:text="Sound name">
-    </Button>
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="@{viewModel.sound.soundName}"
+            android:onClick="@{() -> viewModel.onButtonClicked()}"
+            tools:text="Sound name">
+        </Button>
+    </FrameLayout>
+
 </layout>
 
